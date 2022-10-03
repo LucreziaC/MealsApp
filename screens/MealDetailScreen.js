@@ -1,11 +1,45 @@
-import { Text, Image, View, StyleSheet, ScrollView } from "react-native";
+import {
+  Text,
+  Image,
+  View,
+  StyleSheet,
+  ScrollView,
+  Button,
+} from "react-native";
+import { useLayoutEffect, useState } from "react";
 import List from "../components/MealDetail/List";
 import Subtitle from "../components/MealDetail/Subtitle";
 import MealDetail from "../components/MealDetails";
 
 import { MEALS } from "../data/dummy-data";
+import IconButton from "../components/IconButton";
 
-function MealDetailScreen({ route }) {
+function MealDetailScreen({ route, navigation }) {
+  var iconImage = "star-outline";
+  const [isPreferred, setIsPreferred] = useState(false);
+
+  useLayoutEffect(() => {
+    console.log("useLayoutEffect");
+    if (isPreferred) iconImage = "star";
+    else iconImage = "star-outline";
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <IconButton
+            icon={iconImage}
+            color="white"
+            onPress={headerButtonPressHandler}
+          />
+        );
+      },
+    });
+  }, [navigation, headerButtonPressHandler, isPreferred]);
+
+  function headerButtonPressHandler() {
+    setIsPreferred(!isPreferred);
+    console.log("isPreferred " + isPreferred);
+  }
+
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
