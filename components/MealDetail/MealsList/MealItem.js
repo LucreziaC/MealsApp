@@ -6,9 +6,9 @@ import {
   StyleSheet,
   Platform,
 } from "react-native";
-import MealDetail from "./MealDetails";
 
 import { useNavigation } from "@react-navigation/native";
+import MealDetail from "../../MealDetails";
 
 function MealItem(props) {
   const navigation = useNavigation();
